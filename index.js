@@ -3,6 +3,7 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const morgan = require('morgan')
+const  route  = require('./src/routes/route')
 const PORT = process.env.PORT || 7000
 
 
@@ -10,6 +11,7 @@ const PORT = process.env.PORT || 7000
 app.use(express.json())
 app.use(morgan('dev'))
 app.use(cors())
+app.use(route)
 
 
 
