@@ -1,14 +1,19 @@
 const { emailRegex, passwordRegex } = require("../helpers/regex")
 
 // register controller
-const register_controller = (re, res)=>{
+const register_controller = (req, res)=>{
     try{
+        // getting info from  client 
         const {userName, email, phone, password, address} = req.body
+        // input field validation
 
         if(!userName || !email || !phone || !password || !address) return res.status(404).send('All Field Require')
 
         if(!emailRegex.test(email))  return res.status(401).send('invalid email')
-        if(!passwordRegex.test(password)) return res.status(401).send('password invalid')   
+        if(password.length < 6 || password.length > 15 )  return  res.status(401).send('please choose and password 6 to 15 letters')
+        if(!passwordRegex.test(password)) return res.status(401).send('password is weak')   
+
+       res.status(200).send('register success')     
 
     }
     catch(err){
@@ -17,4 +22,4 @@ const register_controller = (re, res)=>{
 }
 
 
-module.exports = register_controller
+module.exports = register_controller 
