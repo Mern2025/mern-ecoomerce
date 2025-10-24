@@ -1,6 +1,11 @@
 // register controller
 const register_controller = (re, res)=>{
-    res.send('this is register')
+    try{
+
+    }
+    catch(err){
+      res.status(500).send('internal server error')
+    }
 }
 
 
