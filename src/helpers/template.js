@@ -1,4 +1,4 @@
-const otpTemplate = ()=>{
+const otpTemplate = (userName, otp)=>{
 
 return    `<!DOCTYPE html>
 <html lang="en">
@@ -99,14 +99,14 @@ return    `<!DOCTYPE html>
 <body>
   <div class="container">
     <div class="header">
-      <h1>OTP Verification</h1>
+      <h1>!HELLO ${userName}</h1>
     </div>
 
     <div class="body">
       <p>Hello,</p>
-      <p>Use the following One-Time Password (OTP) to complete your verification process. This OTP is valid for <strong>10 minutes</strong>.</p>
+      <p>Use the following One-Time Password (OTP) to complete your verification process. This OTP is valid for <strong>3 minutes</strong>.</p>
 
-      <div class="otp-code">1234</div> <!-- Replace 1234 dynamically -->
+      <div class="otp-code">${otp}</div> <!-- Replace 1234 dynamically -->
 
       <p>
         <a href="#" class="verify-btn">Verify OTP</a>
