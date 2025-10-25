@@ -1,4 +1,4 @@
-const { generateOTP } = require("../helpers/allGenerator")
+const { generateOTP, otpExpireTime } = require("../helpers/allGenerator")
 const { emailRegex, passwordRegex } = require("../helpers/regex")
 const sendMail = require("../helpers/sendMail")
 const { otpTemplate } = require("../helpers/template")
@@ -15,8 +15,12 @@ const register_controller = (req, res)=>{
         if(password.length < 6 || password.length > 15 )  return  res.status(401).send('please choose and password 6 to 15 letters')
         if(!passwordRegex.test(password)) return res.status(401).send('password is weak')   
 
-      sendMail(email , 'otp verification', otpTemplate(userName, generateOTP()))
+    //     const otp =  generateOTP()
 
+    //     sendMail(email , 'otp verification', otpTemplate(userName, otp))
+    //    console.log(otp)
+
+    console.log(otpExpireTime())
 
        res.status(200).send('register success')     
 
