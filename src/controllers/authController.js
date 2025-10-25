@@ -2,8 +2,9 @@ const { generateOTP, otpExpireTime } = require("../helpers/allGenerator")
 const { emailRegex, passwordRegex } = require("../helpers/regex")
 const sendMail = require("../helpers/sendMail")
 const { otpTemplate } = require("../helpers/template")
+const bcrypt = require('bcrypt');
 // register controller
-const register_controller = (req, res)=>{
+const register_controller = async(req, res)=>{
     try{
         // getting info from  client 
         const {userName, email, phone, password, address} = req.body
@@ -15,12 +16,14 @@ const register_controller = (req, res)=>{
         if(password.length < 6 || password.length > 15 )  return  res.status(401).send('please choose and password 6 to 15 letters')
         if(!passwordRegex.test(password)) return res.status(401).send('password is weak')   
 
-    //     const otp =  generateOTP()
+        const otp =  generateOTP()
 
-    //     sendMail(email , 'otp verification', otpTemplate(userName, otp))
-    //    console.log(otp)
+        sendMail(email , 'otp verification', otpTemplate(userName, otp))
 
-    console.log(otpExpireTime())
+
+    const hashpass = await bcrypt.hash(password, 10)
+
+    console.log(hashpass)
 
        res.status(200).send('register success')     
 
