@@ -34,21 +34,10 @@ const authSchema = new mongoose.Schema({
         enum:['admin', 'staff', 'user'],
         default: 'user'
     },
-    address:
-        {
-            city:{
-                type:String,
-                required:true
-            },
-            road:{
-                type:String,
-                required:true
-            },
-            country:{
-                type:String,
-                required:true
-            }
-        }
+    address:{
+        type:String,
+        required:true
+    }
 },{timestamps:true})
 
 

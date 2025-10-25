@@ -10,35 +10,35 @@ const register_controller = async(req, res)=>{
         // getting info from  client 
         const {userName, email, phone, password, address, userRole} = req.body
         // input field validation
+     
 
         if(!userName || !email || !phone || !password || !address) return res.status(400).send('All Field Require')
 
         if(!emailRegex.test(email))  return res.status(400).send('invalid email')
         if(password.length < 6 || password.length > 15 )  return  res.status(400).send('please choose and password 6 to 15 letters')
         if(!passwordRegex.test(password)) return res.status(400).send('password is weak')   
-
         const otp =  generateOTP()
-
         sendMail(email , 'otp verification', otpTemplate(userName, otp))
-
-
         const hashpass = await bcrypt.hash(password, 10)
 
 
         // sav to db
-      await new  authModel({
+     const DataSave = new  authModel({
         userName,
         email,
+        phone,
         password:hashpass,
         address,
         userRole,
         otp,
         expireOtpTime:otpExpireTime(),
-      }).save()
+      }) 
+     console.log(DataSave,"myData")
+      await DataSave.save()
+
        res.status(200).send('register success')     
 
     }
-
     catch(err){
       res.status(500).send('internal server error')  
     }
