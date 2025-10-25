@@ -11,7 +11,7 @@ function generateOTP(length = 6) {
 function otpExpireTime(minutes = 3) {
 
   const future = new Date(Date.now() + minutes * 60 * 1000); 
-  return future.toLocaleTimeString();
+  return future
 }
 
 
