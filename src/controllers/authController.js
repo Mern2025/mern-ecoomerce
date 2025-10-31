@@ -46,7 +46,7 @@ const register_controller = async(req, res)=>{
      console.log(DataSave,"myData")
       await DataSave.save()
 
-       res.status(200).send('register success')     
+       res.status(200).send(`register success send to ${email}`)     
 
     }
     catch(err){
@@ -55,4 +55,13 @@ const register_controller = async(req, res)=>{
 }
 
 
-module.exports = register_controller 
+
+// verify otp controller 
+const verify_otp = (req, res)=>{
+  res.send('otp verify')
+}
+
+
+
+
+module.exports = {register_controller , verify_otp}
