@@ -108,11 +108,19 @@ const resend_otp = async(req, res)=>{
 
 
 // login controller
-const loginController = (req, res)=>{
+const loginController = async(req, res)=>{
    try{
       const {email, password} = req.body
-      
-      res.send('login')
+      if(!emailRegex.test(email))  return res.status(401).send('invalid email')
+      if(!passwordRegex.test(password))  return  res.status(401).send('password is not valid')
+
+      const existuser = await authModel.findOne({email})  
+
+      if(!existuser) return res.status(404).send('this email has no account registered')
+
+        const match = await bcrypt.compare(password, existuser.password);  
+
+      res.send(match)
    }
    catch(err){
       res.status(500).send('internal server error')
