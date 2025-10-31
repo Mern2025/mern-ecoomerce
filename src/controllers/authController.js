@@ -111,6 +111,7 @@ const resend_otp = async(req, res)=>{
 const loginController = async(req, res)=>{
    try{
       const {email, password} = req.body
+      // user ------ validation-----------------------
       if(!emailRegex.test(email))  return res.status(401).send('invalid email')
       if(!passwordRegex.test(password))  return  res.status(401).send('password is not valid')
 
@@ -119,6 +120,11 @@ const loginController = async(req, res)=>{
       if(!existuser) return res.status(404).send('this email has no account registered')
 
         const match = await bcrypt.compare(password, existuser.password);  
+
+        if(match == false) return res.status(401).send('wrong password')
+        
+        if(!existuser.isVerified)  return res.status(401).send('email is not verified')
+
 
       res.send(match)
    }
