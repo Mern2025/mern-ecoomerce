@@ -68,11 +68,16 @@ const verify_otp = async(req, res)=>{
 
   const currentTime = new Date(Date.now())
 
-  if(currentTime > exsitOtp.expireOtpTime  ){  
+  if(currentTime > exsitOtp.expireOtpTime  ) 
     return  res.status(401).send('otp verify time expire')
-  }else{
-    res.status(200).send('otp verify success')
-  }
+     
+     exsitOtp.otp = null
+     exsitOtp.expireOtpTime = null
+     exsitOtp.isVerified = true
+
+    await exsitOtp.save()
+
+     res.status(200).send(exsitOtp)
 }
 
 

@@ -9,7 +9,7 @@ function generateOTP(length = 6) {
 
 
 function otpExpireTime() {
-  const future = new Date(Date.now() + 3 * 60 * 10000); 
+  const future = new Date(Date.now() + 3 * 60 * 1000); 
   return future
 }
 

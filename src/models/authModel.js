@@ -37,6 +37,10 @@ const authSchema = new mongoose.Schema({
     address:{
         type:String,
         required:true
+    },
+    isVerified:{
+        type: Boolean,     
+        default: false     
     }
 },{timestamps:true})
 
