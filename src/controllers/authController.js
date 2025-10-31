@@ -52,8 +52,6 @@ const register_controller = async(req, res)=>{
     }
 }
 
-
-
 // verify otp controller 
 const verify_otp = async(req, res)=>{
  try{
@@ -79,7 +77,6 @@ const verify_otp = async(req, res)=>{
      res.status(500).send('internal serve error')
  }
 }
-
 
 // resend otp controller 
 const resend_otp = async(req, res)=>{
@@ -110,7 +107,13 @@ const resend_otp = async(req, res)=>{
 } 
 
 
+// login controller
+const loginController = (req, res)=>{
+  res.send('login')
+}
 
 
 
-module.exports = {register_controller , verify_otp, resend_otp , resend_otp}
+
+
+module.exports = {register_controller , verify_otp, resend_otp , resend_otp, loginController}
