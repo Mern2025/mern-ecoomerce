@@ -58,7 +58,8 @@ const register_controller = async(req, res)=>{
 
 // verify otp controller 
 const verify_otp = async(req, res)=>{
- const {otp} = req.body
+ try{
+  const {otp} = req.body
 
  if(!otp) return res.status(404).send('ot is required')
 
@@ -70,14 +71,15 @@ const verify_otp = async(req, res)=>{
 
   if(currentTime > exsitOtp.expireOtpTime  ) 
     return  res.status(401).send('otp verify time expire')
-     
      exsitOtp.otp = null
      exsitOtp.expireOtpTime = null
      exsitOtp.isVerified = true
-
     await exsitOtp.save()
-
      res.status(200).send(exsitOtp)
+ }
+ catch(err){
+     res.status(500).send('internal serve error')
+ }
 }
 
 
