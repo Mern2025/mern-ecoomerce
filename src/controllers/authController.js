@@ -5,6 +5,7 @@ const { otpTemplate } = require("../helpers/template")
 const bcrypt = require('bcrypt');
 const authModel = require("../models/authModel");
 var jwt = require('jsonwebtoken');
+
 // register controller
 const register_controller = async(req, res)=>{
     try{
@@ -22,9 +23,6 @@ const register_controller = async(req, res)=>{
         const existUser = await authModel.findOne({email})
 
         if(existUser) return res.status(401).send('User Already Exist')
-
-
-
 
         const otp =  generateOTP()
 
@@ -113,10 +111,13 @@ const loginController = async(req, res)=>{
    try{
       const {email, password} = req.body
       // user ------ validation-----------------------
+
       if(!emailRegex.test(email))  return res.status(401).send('invalid email')
       if(!passwordRegex.test(password))  return  res.status(401).send('password is not valid')
 
-      const existuser = await authModel.findOne({email})  
+      const existuser = await authModel.findOne({email})
+
+
 
       if(!existuser) return res.status(404).send('this email has no account registered')
 
@@ -127,14 +128,23 @@ const loginController = async(req, res)=>{
         if(!existuser.isVerified)  return res.status(401).send('email is not verified')
 
           // generate jwt toke
-          jwt.sign({
-              data: 'foobar'
+         const token = jwt.sign({
+              email: existuser.email,
+              role : existuser.userRole
              }, 
-             'secret', 
+             process.env.jwt_secret, 
              { expiresIn: '1h'});
 
+            const userInfo = {
+              userName: existuser.userName,
+              email:existuser.email,
+              phone:existuser.phone,
+              avatar: existuser.avatar,
+              address:existuser.address
+            } 
 
-      res.send(match)
+
+      res.status(200).send({userInfo:userInfo, accessToken:token})
    }
    catch(err){
       res.status(500).send('internal server error')
