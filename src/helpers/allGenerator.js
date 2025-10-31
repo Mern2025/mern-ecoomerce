@@ -1,15 +1,15 @@
 function generateOTP(length = 6) {
   let otp = '';
   for (let i = 0; i < length; i++) {
-    otp += Math.floor(Math.random() * 10); // 0-9
+    otp += Math.floor(Math.random() * 10); 
   }
   return otp;
 }
 
 
 
-function otpExpireTime(minutes = 3) {
-  const future = new Date(Date.now() + minutes * 60 * 1000); 
+function otpExpireTime() {
+  const future = new Date(Date.now() + 3 * 60 * 10000); 
   return future
 }
 

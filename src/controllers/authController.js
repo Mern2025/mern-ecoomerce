@@ -57,8 +57,22 @@ const register_controller = async(req, res)=>{
 
 
 // verify otp controller 
-const verify_otp = (req, res)=>{
-  res.send('otp verify')
+const verify_otp = async(req, res)=>{
+ const {otp} = req.body
+
+ if(!otp) return res.status(404).send('ot is required')
+
+ const exsitOtp = await authModel.findOne({otp}) 
+
+ if(!exsitOtp) return res.status(401).send('otp is not valid')
+
+  const currentTime = new Date(Date.now())
+
+  if(currentTime > exsitOtp.expireOtpTime  ){  
+    return  res.status(401).send('otp verify time expire')
+  }else{
+    res.status(200).send('otp verify success')
+  }
 }
 
 
