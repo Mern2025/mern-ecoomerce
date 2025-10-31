@@ -4,6 +4,7 @@ const sendMail = require("../helpers/sendMail")
 const { otpTemplate } = require("../helpers/template")
 const bcrypt = require('bcrypt');
 const authModel = require("../models/authModel");
+var jwt = require('jsonwebtoken');
 // register controller
 const register_controller = async(req, res)=>{
     try{
@@ -124,6 +125,13 @@ const loginController = async(req, res)=>{
         if(match == false) return res.status(401).send('wrong password')
         
         if(!existuser.isVerified)  return res.status(401).send('email is not verified')
+
+          // generate jwt toke
+          jwt.sign({
+              data: 'foobar'
+             }, 
+             'secret', 
+             { expiresIn: '1h'});
 
 
       res.send(match)
