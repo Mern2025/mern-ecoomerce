@@ -45,9 +45,7 @@ const register_controller = async(req, res)=>{
       }) 
      console.log(DataSave,"myData")
       await DataSave.save()
-
-       res.status(200).send(`register success send to ${email}`)     
-
+      res.status(200).send({message: `register success and otp send to ${email}`, userInfo: email })
     }
     catch(err){
       res.status(500).send('internal server error')  
@@ -75,7 +73,7 @@ const verify_otp = async(req, res)=>{
      exsitOtp.expireOtpTime = null
      exsitOtp.isVerified = true
     await exsitOtp.save()
-     res.status(200).send(exsitOtp)
+     res.status(200).send('otp verify success')
  }
  catch(err){
      res.status(500).send('internal serve error')
@@ -83,6 +81,36 @@ const verify_otp = async(req, res)=>{
 }
 
 
+// resend otp controller 
+const resend_otp = async(req, res)=>{
+   try{
+      const {email} = req.body
+    if(!emailRegex.test(email))  return res.status(400).send('invalid email')
+    
+    const existuser = await authModel.findOne({email})  
+
+    if(!existuser) return res.status(401).send('please register your info and get your otp')
+    
+    const otp = generateOTP()  
+    const expireTime = otpExpireTime()
+
+    existuser.otp = otp
+    existuser.expireOtpTime = expireTime
+
+    existuser.save()
+
+    sendMail(email , 'otp verification', otpTemplate(existuser.userName, otp))
+    
+
+   res.status(200).send('otp send to email address')
+   }
+   catch(err){
+     res.status(500).send('internal server err')
+   }
+} 
 
 
-module.exports = {register_controller , verify_otp}
+
+
+
+module.exports = {register_controller , verify_otp, resend_otp , resend_otp}
