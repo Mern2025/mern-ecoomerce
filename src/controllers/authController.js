@@ -109,7 +109,14 @@ const resend_otp = async(req, res)=>{
 
 // login controller
 const loginController = (req, res)=>{
-  res.send('login')
+   try{
+      const {email, password} = req.body
+      
+      res.send('login')
+   }
+   catch(err){
+      res.status(500).send('internal server error')
+   }
 }
 
 
