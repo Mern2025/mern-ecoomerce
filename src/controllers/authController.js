@@ -154,10 +154,17 @@ const loginController = async(req, res)=>{
 // update profile controller
 const updateProfile = (req,res)=>{
   try{
-     res.send('done')
+    const {userName, email, password, address, avatar, phone} = req.body
+    
+    const updateInfo = {}
+
+    if(userName) updateInfo.userName = userName
+
+
+    res.send(updateInfo)
   }
   catch(err){
-    res.status(5000).send(`Internal Server Error ${err}`)
+    res.status(500).send(`Internal Server Error ${err}`)
   }
 }
 
