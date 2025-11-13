@@ -105,7 +105,6 @@ const resend_otp = async(req, res)=>{
    }
 } 
 
-
 // login controller
 const loginController = async(req, res)=>{
    try{
@@ -152,7 +151,15 @@ const loginController = async(req, res)=>{
 }
 
 
+// update profile controller
+const updateProfile = (req,res)=>{
+  try{
+     res.send('done')
+  }
+  catch(err){
+    res.status(5000).send(`Internal Server Error ${err}`)
+  }
+}
 
 
-
-module.exports = {register_controller , verify_otp, resend_otp , resend_otp, loginController}
+module.exports = {register_controller , verify_otp, resend_otp , resend_otp, loginController, updateProfile}
