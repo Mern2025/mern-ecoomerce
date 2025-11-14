@@ -1,5 +1,6 @@
 const express = require('express')
 const {register_controller, verify_otp, resend_otp, loginController, updateProfile} = require('../../controllers/authController')
+const multer = require('multer')
 const authApi = express.Router()
 const upload = multer({ dest: 'uploads/' })
 authApi.post('/register', register_controller)

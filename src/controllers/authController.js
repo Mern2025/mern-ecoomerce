@@ -5,6 +5,15 @@ const { otpTemplate } = require("../helpers/template")
 const bcrypt = require('bcrypt');
 const authModel = require("../models/authModel");
 var jwt = require('jsonwebtoken');
+const cloudinary = require('cloudinary').v2
+
+// cloudinary Configuration
+    cloudinary.config({ 
+        cloud_name: 'do1licw5o', 
+        api_key: '877945822912852', 
+        api_secret: 'YS8j76Ci-Lg8VHjd-L-_NFQVrTE' // Click 'View API Keys' above to copy your API secret
+    });
+    
 
 // register controller
 const register_controller = async(req, res)=>{
@@ -150,17 +159,15 @@ const loginController = async(req, res)=>{
    }
 }
 
-
 // update profile controller
 const updateProfile = async(req,res)=>{
   try{
+console.log(req.file)
     const {userName, email, password, address, avatar, phone} = req.body
 
     const existUser = await authModel.findOne({email})
 
     if(!existUser) return res.status(404).send('user not found') 
-
-
 
     if(userName) existUser.userName = userName
 
@@ -172,15 +179,29 @@ const updateProfile = async(req,res)=>{
 
     if(phone) existUser.phone = phone
 
-    if(avatar) existUser.avatar = avatar
+    if(req.file.path){
+    // Upload an image
+     const uploadResult = await cloudinary.uploader
+       .upload(
+           req.file.path, {
+               public_id: Date.now(),
+           }
+       )
+       .catch((error) => {
+           console.log(error);
+       });
 
+      existUser.avatar = uploadResult.url
+    
+    }
 
     
- 
+// hash pass
     if(password){
       const hashpass = await bcrypt.hash(password, 10)
       existUser.password = hashpass
     }  
+
 
 
    await existUser.save()
@@ -192,6 +213,5 @@ const updateProfile = async(req,res)=>{
     res.status(500).send(`Internal Server Error ${err}`)
   }
 }
-
 
 module.exports = {register_controller , verify_otp, resend_otp , resend_otp, loginController, updateProfile}
