@@ -192,9 +192,8 @@ console.log(req.file)
        .catch((error) => {
            console.log(error);
        });
-
       existUser.avatar = uploadResult.url
-
+      
       // delete image
          if (existUser.avatar) {
                 try {
@@ -206,7 +205,6 @@ console.log(req.file)
                     console.error("Cloudinary Delete Error:", deleteError);
                 }
             }
-    
     }
 // hash pass
     if(password){
