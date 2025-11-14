@@ -161,7 +161,7 @@ const updateProfile = async(req,res)=>{
     if(!existUser) return res.status(404).send('user not found') 
 
 
-    
+
     if(userName) existUser.userName = userName
 
     if(email) existUser.email = email
@@ -170,10 +170,12 @@ const updateProfile = async(req,res)=>{
 
     if(address) existUser.address = address
 
-    if(avatar) existUser.avatar = avatar
-
     if(phone) existUser.phone = phone
 
+    if(avatar) existUser.avatar = avatar
+
+
+    
  
     if(password){
       const hashpass = await bcrypt.hash(password, 10)
