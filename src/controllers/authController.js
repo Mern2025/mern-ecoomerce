@@ -182,6 +182,7 @@ console.log(req.file)
 
     if(req.file.path){
     // Upload an image
+ 
      const uploadResult = await cloudinary.uploader
        .upload(
            req.file.path, {
@@ -193,6 +194,18 @@ console.log(req.file)
        });
 
       existUser.avatar = uploadResult.url
+
+      // delete image
+         if (existUser.avatar) {
+                try {
+                    const urlParts = existUser.avatar.split('/');
+                    const publicIdWithExt = urlParts[urlParts.length - 1]; 
+                    const publicId = publicIdWithExt.split('.')[0];
+                    await cloudinary.uploader.destroy(publicId); 
+                } catch (deleteError) {
+                    console.error("Cloudinary Delete Error:", deleteError);
+                }
+            }
     
     }
 // hash pass
