@@ -142,7 +142,7 @@ const loginController = async(req, res)=>{
               role : existuser.userRole
              }, 
              process.env.jwt_secret, 
-             { expiresIn: '1h'});
+             { expiresIn: '1m'});
 
             const userInfo = {
               userName: existuser.userName,
@@ -193,7 +193,7 @@ console.log(req.file)
            console.log(error);
        });
       existUser.avatar = uploadResult.url
-      
+
       // delete image
          if (existUser.avatar) {
                 try {
