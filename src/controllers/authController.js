@@ -152,16 +152,39 @@ const loginController = async(req, res)=>{
 
 
 // update profile controller
-const updateProfile = (req,res)=>{
+const updateProfile = async(req,res)=>{
   try{
     const {userName, email, password, address, avatar, phone} = req.body
+
+    const existUser = await authModel.findOne({email})
+
+    if(!existUser) return res.status(404).send('user not found') 
+
+
     
-    const updateInfo = {}
+    if(userName) existUser.userName = userName
 
-    if(userName) updateInfo.userName = userName
+    if(email) existUser.email = email
+
+    if(password) existUser.password = password
+
+    if(address) existUser.address = address
+
+    if(avatar) existUser.avatar = avatar
+
+    if(phone) existUser.phone = phone
+
+ 
+    if(password){
+      const hashpass = await bcrypt.hash(password, 10)
+      existUser.password = hashpass
+    }  
 
 
-    res.send(updateInfo)
+   await existUser.save()
+
+    res.send(existUser)
+
   }
   catch(err){
     res.status(500).send(`Internal Server Error ${err}`)
