@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt');
 const authModel = require("../models/authModel");
 var jwt = require('jsonwebtoken');
 const cloudinary = require('cloudinary').v2
+const fs = require('fs')
 
 // cloudinary Configuration
     cloudinary.config({ 
@@ -194,17 +195,16 @@ console.log(req.file)
       existUser.avatar = uploadResult.url
     
     }
-
-    
 // hash pass
     if(password){
       const hashpass = await bcrypt.hash(password, 10)
       existUser.password = hashpass
     }  
 
-
-
    await existUser.save()
+   fs.unlink(req.file.path, (err)=>{
+    if(err)console.log(err)
+   })
 
     res.send(existUser)
 
