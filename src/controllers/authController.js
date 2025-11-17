@@ -142,7 +142,7 @@ const loginController = async(req, res)=>{
           role : existuser.userRole
         }, 
         process.env.jwt_secret, 
-        { expiresIn: '4m'}
+        { expiresIn: '1m'}
       );
 
       const userInfo = {
@@ -212,7 +212,6 @@ const updateProfile = async (req, res) => {
         }
       }
     }
-
     // Save user
     await existUser.save();
 

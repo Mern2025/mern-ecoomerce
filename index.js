@@ -12,7 +12,10 @@ require('dotenv').config()
 // middleware
 app.use(express.json())
 app.use(morgan('dev'))
-app.use(cors())
+app.use(cors({
+      origin: 'http://localhost:5173',
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Custom-Headers']
+}))
 app.use(route)
 
 

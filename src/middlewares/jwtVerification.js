@@ -4,14 +4,17 @@ const jwtverification = (req, res, next)=>{
         const token = req.headers.authorization
         
         var decoded = jwt.verify(token, process.env.jwt_secret)
-         
+        
+        
+
+
         next()
 
-        res.send(decoded)
+        res.send('success update')
     }
     catch(err){
-        console.log('this is from catch')
-       res.status(500).send(`Internal Server ${err}`)
+       
+       res.status(307).redirect('http://localhost:7000/auth/login').send('token expire')
     }
 }
 
