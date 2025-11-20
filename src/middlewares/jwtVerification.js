@@ -6,8 +6,6 @@ const jwtverification = (req, res, next)=>{
         var decoded = jwt.verify(token, process.env.jwt_secret)
         
         
-
-
         next()
 
         res.send('success update')

@@ -116,8 +116,6 @@ const resend_otp = async(req, res)=>{
 } 
 
 
-
-
 // login controller
 const loginController = async(req, res)=>{
    try{
@@ -142,7 +140,7 @@ const loginController = async(req, res)=>{
           role : existuser.userRole
         }, 
         process.env.jwt_secret, 
-        { expiresIn: '1m'}
+        { expiresIn: '1h'}
       );
 
       const userInfo = {
@@ -161,24 +159,15 @@ const loginController = async(req, res)=>{
 }
 
 
-
-
 // update profile controller
 const updateProfile = async (req, res) => {
   try {
-    console.log("Multer file object:", req.file);
-
+    console.log("Multer file object:", req.file.path);
     const { userName, email, password, address, phone } = req.body;
-
     // Check if user exists
-    const existUser = await authModel.findOne({ email });
+    let existUser = await authModel.findOne({ email });
     if (!existUser) return res.status(404).send('User not found');
-
-    // Update fields
-    if (userName) existUser.userName = userName;
-    if (address) existUser.address = address;
-    if (phone) existUser.phone = phone;
-
+    
     // Password hash
     if (password) {
       const hashpass = await bcrypt.hash(password, 10);
@@ -186,34 +175,42 @@ const updateProfile = async (req, res) => {
     }
 
     // Image Upload
-    if (req.file?.path) {
-      console.log("Uploaded file path:", req.file.path);
 
+       if(req.file){
+        let existImage = await existUser.avatar.split('/')[7].split('.')[0]
+        // https://res.cloudinary.com/do1licw5o/image/upload/v1763655294/1763655268139.jpg
+         console.log(existImage)
+        await uploadResult.uploader.destroy(existImage)
+      }else{
+        
+      }
+  
       try {
         const uploadResult = await cloudinary.uploader.upload(req.file.path, {
+        
           public_id: Date.now(),
         });
         console.log("Cloudinary response:", uploadResult);
+        console.log(req.file)
         existUser.avatar = uploadResult.secure_url;
       } catch (err) {
         console.log("Cloudinary upload error:", err);
       }
 
-      // Safe local file delete
-      const fs = require('fs');
-      try {
-        fs.unlinkSync(req.file.path); // synchronous delete
-        console.log("Local file deleted:", req.file.path);
-      } catch (err) {
-        if (err.code === 'ENOENT') {
-          console.log("File already deleted or not found:", req.file.path);
-        } else {
-          console.log("Error deleting file:", err);
-        }
-      }
-    }
+    
+     // Update fields
+    if (userName) existUser.userName = userName;
+    if (address) existUser.address = address;
+    if (phone) existUser.phone = phone;
+
+    existUser.avatar = uploadResult.secure_url
+     
+  
+    
     // Save user
+    console.log(uploadResult.req.file.path)
     await existUser.save();
+     fs.unlinkSync(req.file.path)
 
     res.send(existUser);
 
