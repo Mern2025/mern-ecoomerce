@@ -55,9 +55,6 @@ const register_controller = async(req, res)=>{
     }
 }
 
-
-
-
 // verify otp controller 
 const verify_otp = async(req, res)=>{
  try{
@@ -86,8 +83,6 @@ const verify_otp = async(req, res)=>{
      res.status(500).send('internal serve error')
  }
 }
-
-
 
 // resend otp controller 
 const resend_otp = async(req, res)=>{
@@ -158,7 +153,6 @@ const loginController = async(req, res)=>{
    }
 }
 
-
 // update profile controller
 const updateProfile = async (req, res) => {
   try {
@@ -168,6 +162,12 @@ const updateProfile = async (req, res) => {
     let existUser = await authModel.findOne({ email });
     if (!existUser) return res.status(404).send('User not found');
     
+       // Update fields
+    if (userName) existUser.userName = userName;
+    if (address) existUser.address = address;
+    if (phone) existUser.phone = phone;
+
+
     // Password hash
     if (password) {
       const hashpass = await bcrypt.hash(password, 10);
@@ -175,16 +175,6 @@ const updateProfile = async (req, res) => {
     }
 
     // Image Upload
-
-       if(req.file){
-        let existImage = await existUser.avatar.split('/')[7].split('.')[0]
-        // https://res.cloudinary.com/do1licw5o/image/upload/v1763655294/1763655268139.jpg
-         console.log(existImage)
-        await uploadResult.uploader.destroy(existImage)
-      }else{
-        
-      }
-  
       try {
         const uploadResult = await cloudinary.uploader.upload(req.file.path, {
         
@@ -198,15 +188,9 @@ const updateProfile = async (req, res) => {
       }
 
     
-     // Update fields
-    if (userName) existUser.userName = userName;
-    if (address) existUser.address = address;
-    if (phone) existUser.phone = phone;
-
     existUser.avatar = uploadResult.secure_url
      
-  
-    
+
     // Save user
     console.log(uploadResult.req.file.path)
     await existUser.save();
@@ -218,8 +202,6 @@ const updateProfile = async (req, res) => {
     res.status(500).send(`Internal Server Error ${err}`);
   }
 };
-
-
 
 
 module.exports = {register_controller , verify_otp, resend_otp , resend_otp, loginController, updateProfile}
