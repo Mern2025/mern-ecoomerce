@@ -13,6 +13,8 @@ const add_category = (req, res)=>{
         const {categoryName, creatorName} = req.body
 
         if(!categoryName || !creatorName) return res.status(404).send('All fields required') 
+
+        const categoryImage = cloudinary.uploader.upload(req.file.path, {public_id:Date.now()})     
         
         res.send(req.file)
    }
