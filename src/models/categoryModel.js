@@ -15,7 +15,8 @@ const categorySchema = new mongoose.Schema({
     },
     adminApproval:{
         type:String,
-        enum:['approved', 'pending', 'cancel']
+        enum:['approved', 'pending', 'cancel'],
+        default:'pending'
     }
 },{timestamps:true})
 
