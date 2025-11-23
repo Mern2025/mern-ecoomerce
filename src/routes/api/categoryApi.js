@@ -1,5 +1,6 @@
 const express = require('express')
 const { add_category } = require('../../controllers/categorys')
+const multer = require('multer')
 const categoryApi = express.Router()
 const upload = multer({dest: 'upload'})
 
