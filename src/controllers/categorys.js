@@ -5,6 +5,8 @@ const add_category = (req, res)=>{
         const {categoryName, creatorName} = req.body
 
         if(!categoryName || !creatorName) return res.status(404).send('All fields required') 
+        
+        res.send('category created')
    }
    catch(err){
         res.status(500).send('internal server error')
