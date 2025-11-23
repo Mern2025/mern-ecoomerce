@@ -1,5 +1,6 @@
 const cloudinary = require ('cloudinary').v2
-const fs = require('fs')
+const fs = require('fs');
+const categoryModel = require('../models/categoryModel');
 // cloudinary Configuration
 cloudinary.config({ 
     cloud_name: 'do1licw5o', 
@@ -16,7 +17,13 @@ const add_category = async(req, res)=>{
 
         const categoryImage = await cloudinary.uploader.upload(req.file.path, {public_id:Date.now()})     
         
-        res.send(categoryImage)
+      await new categoryModel({
+        categoryName,
+        creatorName,
+        categoryImage: categoryImage.url
+      }).save()
+
+        res.status(200).send('category created successfully')
    }
    catch(err){
         res.status(500).send('internal server error')
