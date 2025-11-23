@@ -8,15 +8,15 @@ cloudinary.config({
 });
 // ---------------add category---------------------
 
-const add_category = (req, res)=>{
+const add_category = async(req, res)=>{
    try{
         const {categoryName, creatorName} = req.body
 
         if(!categoryName || !creatorName) return res.status(404).send('All fields required') 
 
-        const categoryImage = cloudinary.uploader.upload(req.file.path, {public_id:Date.now()})     
+        const categoryImage = await cloudinary.uploader.upload(req.file.path, {public_id:Date.now()})     
         
-        res.send(req.file)
+        res.send(categoryImage)
    }
    catch(err){
         res.status(500).send('internal server error')
