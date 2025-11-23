@@ -23,6 +23,14 @@ const add_category = async(req, res)=>{
         categoryImage: categoryImage.url
       }).save()
 
+     fs.unlink(req.file.path, (err) => {
+    if (err) {
+        console.error('File delete error:', err);
+    } else {
+        console.log('File deleted successfully');
+    }
+  })
+
         res.status(200).send('category created successfully')
    }
    catch(err){
