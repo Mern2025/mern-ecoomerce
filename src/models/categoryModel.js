@@ -12,7 +12,13 @@ const categorySchema = new mongoose.Schema({
     creatorName:{
         type:mongoose.Schema.ObjectId,
         ref:'auths'
+    },
+    adminApproval:{
+        type:String,
+        enum:['approved', 'pending', 'cancel']
     }
 },{timestamps:true})
+
+
 
 // pending , approved, reject
