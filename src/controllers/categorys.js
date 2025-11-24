@@ -77,7 +77,7 @@ const get_all_category = async(req, res)=>{
 // ----public---------
 const get_active_category = async(req, res)=>{
   try{
-      const approvedCategory = await categoryModel.find({adminApproval:'pending'})
+      const approvedCategory = await categoryModel.find({adminApproval:'approved'})
       res.status(200).send(approvedCategory)
   }
   catch(err){
@@ -91,17 +91,21 @@ const get_active_category = async(req, res)=>{
 // ------------------delete category-------------------
 // public
 const delete_category = async(req, res)=>{
-  try{
-    
-    const {categoryId} = req.body
 
-    await categoryModel.findByIdAndDelete(categoryId)
-    res.status(200).send('delete success')
-  }
-  catch(err){
-    console.log(error)
-    res.status(500).send('internal server error')
-  }
+try{
+   const {categoryId} = req.body
+    // return console.log(categoryId)
+   const deleteId = await categoryModel.findByIdAndDelete({_id:categoryId})
+   console.log(deleteId)
+   
+   return res.status(200).send('delete success')
+}catch(err){
+  console.log(err)
+  res.status(500).send('internal server error')
+}
+
+    
+
 }
 
 
