@@ -53,14 +53,43 @@ const update_category = async(req, res)=>{
   }
   catch(err){
     console.log(err)
+    res.status(500).send('internal server error')
   }
 }
 
 
+
+
 // ---------------------get category------------------
+const get_all_category = async(req, res)=>{
+  try{
+     const allCategory = await categoryModel.find()
+     res.status(200).send(allCategory)
+  }
+  catch(err){
+    console.log(err)
+    res.status(500).send('internal server error')
+  }
+}
+
+
+
+// ----public---------
+const get_active_category = async(req, res)=>{
+  try{
+      const approvedCategory = await categoryModel.find({adminApproval:'approved'})
+      res.status(200).send(approvedCategory)
+  }
+  catch(err){
+    console.log(err)
+    res.status(500).send('internal server error')
+  }
+}
+
+
 
 
 // ------------------delete category-------------------
 
 
-module.exports = {add_category, update_category}
+module.exports = {add_category, update_category,get_all_category, get_active_category}
