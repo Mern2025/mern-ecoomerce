@@ -77,7 +77,7 @@ const get_all_category = async(req, res)=>{
 // ----public---------
 const get_active_category = async(req, res)=>{
   try{
-      const approvedCategory = await categoryModel.find({adminApproval:'approved'})
+      const approvedCategory = await categoryModel.find({adminApproval:'pending'})
       res.status(200).send(approvedCategory)
   }
   catch(err){
