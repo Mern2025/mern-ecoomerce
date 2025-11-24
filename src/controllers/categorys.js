@@ -1,6 +1,7 @@
 const cloudinary = require ('cloudinary').v2
 const fs = require('fs');
 const categoryModel = require('../models/categoryModel');
+const { error } = require('console');
 // cloudinary Configuration
 cloudinary.config({ 
     cloud_name: 'do1licw5o', 
@@ -59,7 +60,6 @@ const update_category = async(req, res)=>{
 
 
 
-
 // ---------------------get category------------------
 const get_all_category = async(req, res)=>{
   try{
@@ -88,8 +88,18 @@ const get_active_category = async(req, res)=>{
 
 
 
-
 // ------------------delete category-------------------
+// public
+const delete_category = async(req, res)=>{
+  try{
+    await categoryModel.findByIdAndDelete(categoryId)
+    res.status(200).send('delete success')
+  }
+  catch(err){
+    console.log(error)
+    res.status(500).send('internal server error')
+  }
+}
 
 
 module.exports = {add_category, update_category,get_all_category, get_active_category}
