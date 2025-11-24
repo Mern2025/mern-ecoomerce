@@ -8,7 +8,7 @@ categoryApi.post('/add-category', upload.single('categoryImage'), add_category)
 categoryApi.patch('/update-category-status', update_category)
 categoryApi.get('/getAll_category', get_all_category)
 categoryApi.get('/get_active_category', get_active_category)
-categoryApi.delete('/delteCategory', delete_category)
+categoryApi.delete('/deleteCategory', delete_category)
 
 module.exports = categoryApi
 

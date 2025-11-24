@@ -92,6 +92,9 @@ const get_active_category = async(req, res)=>{
 // public
 const delete_category = async(req, res)=>{
   try{
+    
+    const {categoryId} = req.body
+
     await categoryModel.findByIdAndDelete(categoryId)
     res.status(200).send('delete success')
   }
