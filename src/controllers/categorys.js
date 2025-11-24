@@ -47,7 +47,9 @@ const update_category = async(req, res)=>{
       
       if(updateStatus != 'approved' && updateStatus != 'cancel') return res.status(403).send('please select approved or cancel')  
 
-      await categoryModel.findByIdAndUpdate({categoryId}, {adminApproval: 'cancel'})
+      await categoryModel.findByIdAndUpdate(categoryId, {adminApproval: updateStatus})
+
+      res.status(200).send('update success')
   }
   catch(err){
     console.log(err)
@@ -61,4 +63,4 @@ const update_category = async(req, res)=>{
 // ------------------delete category-------------------
 
 
-module.exports = {add_category}
+module.exports = {add_category, update_category}
