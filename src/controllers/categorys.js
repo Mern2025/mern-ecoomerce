@@ -102,4 +102,4 @@ const delete_category = async(req, res)=>{
 }
 
 
-module.exports = {add_category, update_category,get_all_category, get_active_category}
+module.exports = {add_category, update_category,get_all_category, get_active_category, delete_category}
