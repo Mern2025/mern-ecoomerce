@@ -39,6 +39,20 @@ const add_category = async(req, res)=>{
 }
 
 // ---------------update category----------------
+const update_category = async(req, res)=>{
+  try{
+      const {categoryId, updateStatus} = req.body
+
+      if(!categoryId) return res.status(404).send('categoryId not required')
+      
+      if(updateStatus != 'approved' && updateStatus != 'cancel') return res.status(403).send('please select approved or cancel')  
+
+      await categoryModel.findByIdAndUpdate({categoryId}, {adminApproval: 'cancel'})
+  }
+  catch(err){
+    console.log(err)
+  }
+}
 
 
 // ---------------------get category------------------
