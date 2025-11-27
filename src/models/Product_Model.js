@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const ProductSchema = new mongoose.Schema({
     tags:[
         {
-            tagName:{
+            tagType:{
                 type:String,
                 required: true
             },

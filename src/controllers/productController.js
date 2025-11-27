@@ -1,6 +1,12 @@
-const addProduct = (req, res)=>{
+const Product_Model = require("../models/Product_Model")
+
+const addProduct = async(req, res)=>{
     try {
-        res.send('productController')
+        const {tags} = req.body
+
+        await new Product_Model({tags}).save()
+
+        res.send('product added')
     } catch (error) {
         console.log(error)
     }
