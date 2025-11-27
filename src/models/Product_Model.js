@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
+// const mongoose = require('mongoose')
 
-constProductSchema = new mongoose.Schema({
-    
-})
+// constProductSchema = new mongoose.Schema({
+
+// })
