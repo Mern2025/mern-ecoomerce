@@ -1,11 +1,23 @@
-const authModel = require("../models/authModel")
-
-const CheckRole = async(req, res, next)=>{
-  const {email} = req.email
-  const existUser = await authModel.findOne({email})
-
-  res.send(existUser)
+const checkRoles =  (roles)=>{
+  return(req, res , next)=>{
+    console.log(roles)
+     if(roles[0] == req.user.role || roles[1]==req.user.role){
+      return next()
+     }else{
+      return res.status(401).json({message:'your are not authorize this feature'})
+     }
+  }
 }
 
+module.exports = checkRoles
 
-module.exports = CheckRole
+
+
+
+
+// const checkRole= (roles)=>{
+//   return (req,res,next)=>{
+//     console.log(roles)
+//   }
+// }
+// module.exports=checkRole

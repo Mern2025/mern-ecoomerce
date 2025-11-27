@@ -145,7 +145,6 @@ const loginController = async(req, res)=>{
         avatar: existuser.avatar,
         address: existuser.address
       } 
-
       res.status(200).send({userInfo:userInfo, accessToken:token})
    }
    catch(err){
