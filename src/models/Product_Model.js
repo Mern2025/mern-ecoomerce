@@ -27,8 +27,47 @@ const ProductSchema = new mongoose.Schema({
     }
    ],
    categoryId:{
-    type:mongoose.Schema.ObjectId
-   }
+    type:mongoose.Schema.ObjectId,
+    ref:'category'
+   },
+   description:{
+    type:String,
+    required:true
+   },
+   review:[ 
+    {
+      reviewId:{
+        type:mongoose.Schema.ObjectId,
+        ref: 'auth'
+      },
+      review:{
+        type:String,
+        default:null
+      }
+    }
+   ],
+   discountPrice:{
+    type:Number,
+    default:null
+   },
+   tags:[
+    {
+      type:String,
+      default:null
+    }
+   ],
+   stock:{
+    type:Number,
+    required:true
+   },
+   SKU:{
+    type:Number,
+    required:true
+   },
+   adminApproval:{
+    type:String,
+    default:pending,
+    enum:['pending', 'approved', 'cancel']
+    },
 })
-
 module.exports = mongoose.model('products', ProductSchema)
