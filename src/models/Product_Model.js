@@ -66,7 +66,7 @@ const ProductSchema = new mongoose.Schema({
    },
    adminApproval:{
     type:String,
-    default:pending,
+    default:'pending',
     enum:['pending', 'approved', 'cancel']
     },
 })
