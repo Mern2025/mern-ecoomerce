@@ -10,7 +10,7 @@ const upload = multer({dest: 'upload'})
 
 categoryApi.post('/add-category',  upload.single('categoryImage'), add_category)
 categoryApi.patch('/update-category-status',jwtverification,checkRoles(['admin']),  update_category)
-categoryApi.get('/getAll_category',jwtverification,checkRoles(['admin' , 'staff']), get_all_category)
+categoryApi.get('/getAll_category',jwtverification,checkRoles(['admin','staff' ]), get_all_category)
 categoryApi.get('/get_active_category',  get_active_category)// public route
 categoryApi.delete('/deleteCategory',jwtverification,checkRoles(['admin']),  delete_category)
 

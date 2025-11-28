@@ -64,7 +64,7 @@ const update_category = async(req, res)=>{
 
       await categoryModel.findByIdAndUpdate(categoryId, {adminApproval: updateStatus})
 
-      res.status(200).send('update success')
+      return res.status(200).json({message:'update success'})
   }
   catch(err){
     console.log(err)
@@ -76,9 +76,11 @@ const update_category = async(req, res)=>{
 
 // ---------------------get category------------------
 const get_all_category = async(req, res)=>{
+  // return console.log(req.body) 
   try{
      const allCategory = await categoryModel.find()
-     res.status(200).send(allCategory)
+     
+    return res.status(200).json({allCategory})
   }
   catch(err){
     console.log(err)
