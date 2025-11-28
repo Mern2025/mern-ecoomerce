@@ -30,5 +30,22 @@ function otpExpireTime() {
     .replace(/^-+|-+$/g, "");
 };
 
+// SKU generator
+const generateSKU = (title = "") => {
+  // create 3-letter prefix from title
+  const prefix = title
+    .toString()
+    .trim()
+    .toUpperCase()
+    .replace(/[^A-Z]/g, "") // remove non-letters
+    .slice(0, 3) || "SKU";
 
-module.exports = {generateOTP , otpExpireTime, generateSlug}
+  // 6-digit random number
+  const randomNumber = Math.floor(100000 + Math.random() * 900000);
+
+  return `${prefix}-${randomNumber}`;
+};
+
+
+
+module.exports = {generateOTP , otpExpireTime, generateSlug,generateSKU}
