@@ -69,5 +69,9 @@ const ProductSchema = new mongoose.Schema({
     default:'pending',
     enum:['pending', 'approved', 'cancel']
     },
+    slug:{
+      type:String,
+      required:true
+    }
 })
 module.exports = mongoose.model('products', ProductSchema)
