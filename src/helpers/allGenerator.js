@@ -11,5 +11,24 @@ function otpExpireTime() {
   return future
 }
 
+// generate slug
+ const generateSlug = (title) => {
+  if (!title) return "";
 
-module.exports = {generateOTP , otpExpireTime}
+  return title
+    .toString()
+    .toLowerCase()
+    .trim()
+    // remove accents (á → a)
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    // replace non-letter/number with hyphen
+    .replace(/[^a-z0-9]+/g, "-")
+    // remove double hyphens
+    .replace(/--+/g, "-")
+    // remove starting/ending hyphens
+    .replace(/^-+|-+$/g, "");
+};
+
+
+module.exports = {generateOTP , otpExpireTime, generateSlug}
