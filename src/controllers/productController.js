@@ -9,9 +9,15 @@ const addProduct = async(req, res)=>{
         const sku = generateSKU(title)   
         
         // ----getting image
+        const thumbNailImagePath = req.files.thumbnail[0].path
+        const thumbnailImagePath = req.files.subImages?.map((item)=>{
+            return item.path
+        })
         
         res.status(200).send(req.files)
         // res.status(200).json(req.file)
+
+        console.log(thumbnailImagePath)
     } catch (error) {
         console.log(error)
     }
