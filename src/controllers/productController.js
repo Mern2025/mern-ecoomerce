@@ -54,7 +54,7 @@ const addProduct = async(req, res)=>{
         res.status(200).json('okk')
     } catch (error) {
         console.log(error)
-        
+        res.status(500).json('internal server error')
     }
 }
 module.exports = {addProduct}
