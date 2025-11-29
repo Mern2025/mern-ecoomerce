@@ -10,14 +10,18 @@ const addProduct = async(req, res)=>{
         
         // ----getting image
         const thumbNailImagePath = req.files.thumbnail[0].path
-        const thumbnailImagePath = req.files.subImages?.map((item)=>{
+        const SubImagePath = req.files.subImages?.map((item)=>{
             return item.path
         })
-        
-        res.status(200).send(req.files)
-        // res.status(200).json(req.file)
 
-        console.log(thumbnailImagePath)
+        // upload image
+        // const thumbnail = await cloudinary.uploader.upload(thumbNailImagePath)
+
+        SubImagePath.map((item)=>{
+            console.log(item)
+        })
+  
+        res.send('okk')
     } catch (error) {
         console.log(error)
     }
