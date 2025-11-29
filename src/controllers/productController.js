@@ -1,5 +1,15 @@
 const { generateSKU, generateSlug } = require("../helpers/allGenerator")
 const Product_Model = require("../models/Product_Model")
+const cloudinary = require('cloudinary').v2
+const fs = require('fs')
+
+// cloudinary Configuration
+cloudinary.config({ 
+    cloud_name: 'do1licw5o', 
+    api_key: '877945822912852', 
+    api_secret: 'YS8j76Ci-Lg8VHjd-L-_NFQVrTE'
+});
+
 
 const addProduct = async(req, res)=>{
     try {
@@ -17,11 +27,15 @@ const addProduct = async(req, res)=>{
         // upload image
         // const thumbnail = await cloudinary.uploader.upload(thumbNailImagePath)
 
-        SubImagePath.map((item)=>{
-            console.log(item)
+     const subImages =  SubImagePath.map(async(item)=>{
+         const subImagesLink =  await cloudinary.uploader.upload(item,{public_id:Date.now()})
+         return subImagesLink
         })
-  
-        res.send('okk')
+
+        console.log(subImages)
+
+        res.status(200).send('okk')
+        
     } catch (error) {
         console.log(error)
     }
