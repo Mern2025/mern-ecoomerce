@@ -16,7 +16,7 @@ const addProduct = async(req, res)=>{
         const {title, price, variant, categoryId, description, review, discountPrice, tags,stock} = req.body
         //    data generator
         const slug =  generateSlug(title)
-        const sku = generateSKU(title)   
+        const SKU = generateSKU(title)   
         
         // ----getting image
         const thumbNailImagePath = req.files.thumbnail[0].path
@@ -31,13 +31,30 @@ const addProduct = async(req, res)=>{
      const subImages = await Promise.all(SubImagePath.map(async(item)=>{
          const subImagesLink =  await cloudinary.uploader.upload(item,{public_id:Date.now()})
          fs.unlink(item,(err)=>{if(err)console.log(err)})
-         return subImagesLink
+         return subImagesLink.url
         })) 
         console.log(subImages)
 
-        res.status(200).send('okk')
+        await new Product_Model({
+            title,
+            price,
+            variant,
+            categoryId,
+            description,
+            review,
+            discountPrice,
+            tags,
+            stock,
+            SKU,
+            slug,
+            thumbnail:thumbnail.url,
+            subImages
+        }).save()
+
+        res.status(200).json('okk')
     } catch (error) {
         console.log(error)
+        
     }
 }
 module.exports = {addProduct}
