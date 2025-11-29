@@ -25,12 +25,12 @@ const addProduct = async(req, res)=>{
         })
 
         // upload image
-        const thumbnail = await cloudinary.uploader.upload(thumbNailImagePath,{public_id:new Date.now()})
+        // const thumbnail = await cloudinary.uploader.upload(thumbNailImagePath,{public_id:new Date.now()})
 
-     const subImages =  SubImagePath.map(async(item)=>{
+     const subImages = await Promise.all(SubImagePath.map(async(item)=>{
          const subImagesLink =  await cloudinary.uploader.upload(item,{public_id:Date.now()})
          return subImagesLink
-        })
+        })) 
 
         console.log(subImages)
 
