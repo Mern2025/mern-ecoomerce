@@ -7,7 +7,9 @@ const addProduct = async(req, res)=>{
     //    data generator
       const slug =  generateSlug(title)
       const sku = generateSKU(title)   
-        res.send('product added')
+
+          console.log(slug, sku)
+        res.send('product uploaded')
     } catch (error) {
         console.log(error)
     }
