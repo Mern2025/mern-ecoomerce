@@ -85,8 +85,6 @@ const get_all_category = async(req, res)=>{
   }
 }
 
-
-
 // ----public---------
 const get_active_category = async(req, res)=>{
   try{
