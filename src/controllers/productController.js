@@ -49,7 +49,7 @@ const addProduct = async(req, res)=>{
             slug,
             thumbnail:thumbnail.url,
             subImages
-        }).save()
+        }).save() 
 
         return res.status(200).json('okk')
     } catch (error) {
