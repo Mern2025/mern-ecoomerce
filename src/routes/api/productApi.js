@@ -9,7 +9,7 @@ const upload = multer({ dest: 'uploads/' })
 const uploadMiddleware = upload.fields([{name:'thumbnail', maxCount:1},{name:'subImages', maxCount:8}])
 
 productApi.post('/add-product', jwtverification, checkRoles(['staff', 'admin']), uploadMiddleware, addProduct)
-productApi.post('/update-status', update_Status)
+productApi.patch('/update-status', update_Status)
 
 
 
