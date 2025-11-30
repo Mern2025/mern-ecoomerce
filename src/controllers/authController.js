@@ -135,7 +135,7 @@ const loginController = async(req, res)=>{
           role : existuser.userRole
         }, 
         process.env.jwt_secret, 
-        { expiresIn: '1h'}
+        { expiresIn: '7d'}
       );
 
       const userInfo = {
