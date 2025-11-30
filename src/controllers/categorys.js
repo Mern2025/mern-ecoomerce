@@ -16,7 +16,6 @@ const add_category = async(req, res)=>{
     if(!categoryName && !creatorName)return res.status(404).json({message:'All fields are required!'})
       let exists_category = await categoryModel.findOne({categoryName})
     
-  
     if(exists_category) return res.status(404).json({message:'This product already exist'})
       const upload_result = await cloudinary.uploader.upload(req.file.path, {public_id: Date.now()})
 
