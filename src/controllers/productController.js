@@ -60,11 +60,11 @@ const addProduct = async(req, res)=>{
 // update status
 const update_Status = (req ,res)=>{
     try {
-        
+        res.send('this is update status')
     } catch (error) {
-        
+        res.status(500).json(`Internal Server ${error}`)
     }
 }
 
 
-module.exports = {addProduct}
+module.exports = {addProduct, update_Status}
