@@ -10,7 +10,6 @@ cloudinary.config({
     api_secret: 'YS8j76Ci-Lg8VHjd-L-_NFQVrTE'
 });
 
-
 const addProduct = async(req, res)=>{
     try {
         const {title, price, variant, categoryId, description, review, discountPrice, tags,stock} = req.body
