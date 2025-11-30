@@ -14,6 +14,7 @@ cloudinary.config({
 const addProduct = async(req, res)=>{
     try {
         const {title, price, variant, categoryId, description, review, discountPrice, tags,stock} = req.body
+      
         //    data generator
         const slug =  generateSlug(title)
         const SKU = generateSKU(title)   
@@ -33,15 +34,14 @@ const addProduct = async(req, res)=>{
          fs.unlink(item,(err)=>{if(err)console.log(err)})
          return subImagesLink.url
         })) 
-        console.log(subImages)
 
         await new Product_Model({
             title,
             price,
-            variant,
+            variant:JSON.parse(variant),
             categoryId,
             description,
-            review,
+            review:JSON.parse(review),
             discountPrice,
             tags,
             stock,
@@ -51,7 +51,7 @@ const addProduct = async(req, res)=>{
             subImages
         }).save()
 
-        res.status(200).json('okk')
+        return res.status(200).json('okk')
     } catch (error) {
         console.log(error)
         res.status(500).send('internal server error')
