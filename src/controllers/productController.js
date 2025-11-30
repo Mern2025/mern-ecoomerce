@@ -58,9 +58,16 @@ const addProduct = async(req, res)=>{
 }
 
 // update status
-const update_Status = (req ,res)=>{
+const update_Status = async(req ,res)=>{
     try {
-        res.send('this is update status')
+        const  {productId , status} = req.body
+
+        if(status != 'approved' && status != 'cancel')return res.status(400).json('please choose between approved or cancel')
+
+       await Product_Model.findByIdAndUpdate(productId, {adminApproval:status})
+          
+            
+        res.send('status update success')
     } catch (error) {
         res.status(500).json(`Internal Server ${error}`)
     }
