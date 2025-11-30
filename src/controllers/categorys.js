@@ -71,8 +71,6 @@ const update_category = async(req, res)=>{
   }
 }
 
-
-
 // ---------------------get category------------------
 const get_all_category = async(req, res)=>{
   // return console.log(req.body) 
