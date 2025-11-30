@@ -97,7 +97,6 @@ const get_active_category = async(req, res)=>{
   }
 }
 
-
 // ------------------delete category-------------------
 // public
 const delete_category = async(req, res)=>{
