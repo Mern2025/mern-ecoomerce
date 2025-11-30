@@ -50,10 +50,21 @@ const addProduct = async(req, res)=>{
             subImages
         }).save() 
 
-        return res.status(200).json('okk')
+        return res.status(200).json('upload done to cloudinary')
     } catch (error) {
         console.log(error)
         res.status(500).send('internal server error')
     }
 }
+
+// update status
+const update_Status = (req ,res)=>{
+    try {
+        
+    } catch (error) {
+        
+    }
+}
+
+
 module.exports = {addProduct}
