@@ -91,11 +91,11 @@ const delete_product = async(req, res)=>{
 // dashboard products
 const dashboard_product = async(req, res)=>{
     try {
-        const {categoryId} = req.body
-
+        const {filterProduct} = req.body
         const filterBy = {}
+        if(filterProduct != 'all') filterBy.categoryId = filterProduct
 
-        const Products = await Product_Model.find({categoryId})  
+        const Products = await Product_Model.find({})  
           
         res.status(200).json(Products)
     } catch (error) {
