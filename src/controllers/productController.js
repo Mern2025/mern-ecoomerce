@@ -93,6 +93,8 @@ const dashboard_product = async(req, res)=>{
     try {
         const {categoryId} = req.body
 
+        const filterBy = {}
+
         const Products = await Product_Model.find({categoryId})  
           
         res.status(200).json(Products)
