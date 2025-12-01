@@ -73,5 +73,15 @@ const update_Status = async(req ,res)=>{
     }
 }
 
+// delete product controller
+const deleteProduct = (req, res)=>{
+    try {
+        
+    } catch (error) {
+        res.status(500).send(`Internal Server ${error}`)
+    }
+}
+
+
 
 module.exports = {addProduct, update_Status}
