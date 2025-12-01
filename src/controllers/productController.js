@@ -90,7 +90,11 @@ const delete_product = async(req, res)=>{
 
 // dashboard products
 const dashboard_product = (req, res)=>{
-    res.send('this is dashboard products')
+    try {
+        res.send('hi')
+    } catch (error) {
+        res.status(500).send(`this is internal server ${error}`)
+    }
 }
 
 module.exports = {addProduct, update_Status, delete_product, dashboard_product}

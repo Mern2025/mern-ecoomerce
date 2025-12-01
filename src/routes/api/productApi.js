@@ -11,7 +11,7 @@ const uploadMiddleware = upload.fields([{name:'thumbnail', maxCount:1},{name:'su
 productApi.post('/add-product', jwtverification, checkRoles(['staff', 'admin']), uploadMiddleware, addProduct)
 productApi.patch('/update-status', jwtverification, checkRoles(['admin']), update_Status)
 productApi.delete('/delete_product', delete_product)
-productApi.delete('/dashboard_product', dashboard_product)
+productApi.get('/dashboard_product', dashboard_product)
 
 
 
