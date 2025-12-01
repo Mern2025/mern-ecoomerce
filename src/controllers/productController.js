@@ -79,12 +79,18 @@ const delete_product = async(req, res)=>{
         const {productId} = req.body
 
         await Product_Model.findByIdAndDelete(productId)
-
+ 
         res.json('productId delete success')
-
+     
     } catch (error) {
         res.status(500).send(`Internal Server ${error}`)
     }
 }
 
-module.exports = {addProduct, update_Status, delete_product}
+
+// dashboard products
+const dashboard_product = (req, res)=>{
+    res.send('this is dashboard products')
+}
+
+module.exports = {addProduct, update_Status, delete_product, dashboard_product}
