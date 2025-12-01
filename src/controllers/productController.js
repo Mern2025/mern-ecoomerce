@@ -80,7 +80,7 @@ const delete_product = async(req, res)=>{
 
         await Product_Model.findByIdAndDelete(productId)
 
-        res.status(200).json('productId delete success')
+        res.json('productId delete success')
 
     } catch (error) {
         res.status(500).send(`Internal Server ${error}`)
