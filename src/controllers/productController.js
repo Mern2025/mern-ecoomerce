@@ -89,9 +89,13 @@ const delete_product = async(req, res)=>{
 
 
 // dashboard products
-const dashboard_product = (req, res)=>{
+const dashboard_product = async(req, res)=>{
     try {
-        res.send('hi')
+        const {categoryId} = req.body
+
+        const Products = await Product_Model.find({categoryId})  
+          
+        res.status(200).json(Products)
     } catch (error) {
         res.status(500).send(`this is internal server ${error}`)
     }
