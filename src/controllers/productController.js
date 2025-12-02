@@ -93,11 +93,16 @@ const dashboard_product = async(req, res)=>{
     try {
         const {filterProduct} = req.body
         const filterBy = {}
-        if(filterProduct != 'all') filterBy.categoryId = filterProduct
 
-        const Products = await Product_Model.find({})  
+        console.log(req.query)
+
+
+        if(filterProduct != 'all' && filterProduct != '') filterBy.categoryId = filterProduct
+
+
+        const Products = await Product_Model.find(filterBy).limit(10)
           
-        res.status(200).json(Products)
+        res.status(200).json(Products.length)
     } catch (error) {
         res.status(500).send(`this is internal server ${error}`)
     }
