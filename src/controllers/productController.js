@@ -91,8 +91,18 @@ const delete_product = async(req, res)=>{
 // dashboard products
 const dashboard_product = async(req, res)=>{
     try {
+        // filter by category all product
         const {filterProduct} = req.body
         const filterBy = {}
+
+        // getting product limits
+        const {limit, page} = req.query
+  
+        const limitPerPage = limit || 6
+
+        const skipProducts = limitPerPage * (page -1)
+
+        console.log(skipProducts)
 
         console.log(req.query)
 
@@ -100,9 +110,9 @@ const dashboard_product = async(req, res)=>{
         if(filterProduct != 'all' && filterProduct != '') filterBy.categoryId = filterProduct
 
 
-        const Products = await Product_Model.find(filterBy).limit(10)
+        const Products = await Product_Model.find(filterBy).limit(limitPerPage).skip(5)
           
-        res.status(200).json(Products.length)
+        res.status(200).json(Products)
     } catch (error) {
         res.status(500).send(`this is internal server ${error}`)
     }
